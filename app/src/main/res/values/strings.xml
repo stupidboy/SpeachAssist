@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">StringToAction</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="callactions">
+        <item >call</item>
+        <item >dial</item>
+        <item>phone call</item>
+    </string-array>
+    <string-array name="settingsactions">
+        <item >open</item>
+        <item >close</item>
+        <item>turn</item>
+    </string-array>
+    <string name="settingactions_open">open</string>
+    <string name="settingactions_close">close</string>
+    <string name="settingactions_turn">turn</string>
+
+    <string-array name="settingsitems_wifi">
+        <item >wifi</item>
+        <item >wireless network</item>
+        <item >WLAN</item>
+    </string-array>
+    <string-array name="settingsitems_bt">
+        <item >bluetooth</item>
+        <item >bt</item>
+    </string-array>
+    <string-array name="settingsitems_data">
+        <item >mobile data</item>
+        <item >cellular data</item>
+    </string-array>
+    <string-array name="settingsitems_air">
+        <item >airplane mode</item>
+    </string-array>
+    <string-array name="settingsitems_share">
+        <item >hotspot</item>
+        <item >personal hotspot</item>
+    </string-array>
+    <string-array name="camera_actions">
+        <item>take a photo</item>
+        <item>take a picture</item>
+        <item>camera</item>
+    </string-array>
+    <string-array name="weather_actions">
+        <item>weather</item>
+    </string-array>
+
+    <string-array name="date_today">
+        <item>now</item>
+        <item>today</item>
+        <item>current</item>
+    </string-array>
+    <string-array name="date_tomorrow">
+        <item>tomorrow</item>
+    </string-array>
+    <string-array name="date_day_after_tomorrow">
+        <item>day after tomorrow</item>
+    </string-array>
+    <string name="day_offset">after</string>
+
+
+
+
+    <string name="parse_result_op_failed_number_not_rec">sorry,phone number not recgnize</string>
+    <string name="parse_result_op_failed_op_not_support">sorry,current not support</string>
+    <string name="parse_result_op_ok_now">ok,processing</string>
+    <string name="parse_result_op_failed_op_failed">sorry,cant do that</string>
+</resources>

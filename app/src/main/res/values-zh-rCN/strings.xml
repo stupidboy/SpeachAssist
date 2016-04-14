@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+
+    <string-array name="callactions">
+        <item >拨打</item>
+        <item >打电话</item>
+        <item>呼叫</item>
+    </string-array>
+    <string name="settingactions_open">打开</string>
+    <string name="settingactions_close">关闭</string>
+    <string name="settingactions_turn">调整</string>
+
+    <string-array name="settingsactions">
+        <item >打开</item>
+        <item >关闭</item>
+        <item>调整</item>
+    </string-array>
+    <string-array name="settingsitems_wifi">
+        <item >wifi</item>
+        <item >无线网络</item>
+    </string-array>
+    <string-array name="settingsitems_bt">
+        <item >蓝牙</item>
+        <item >bt</item>
+    </string-array>
+    <string-array name="settingsitems_data">
+        <item >数据业务</item>
+        <item >移动网络</item>
+    </string-array>
+    <string-array name="settingsitems_air">
+        <item >飞行模式</item>
+    </string-array>
+    <string-array name="settingsitems_share">
+        <item >网络共享</item>
+        <item >wifi热点</item>
+    </string-array>
+    <string-array name="camera_actions">
+    <item>照相机</item>
+        <item>照相</item>
+    <item>摄像机</item>
+    <item>摄像</item>
+        <item>拍照</item>
+        <item>摄像头</item>
+    </string-array>
+
+    <string-array name="weather_actions">
+        <item>天气</item>
+        <item>天气预报</item>
+    </string-array>
+
+    <string-array name="date_today">
+        <item>现在</item>
+        <item>今天</item>
+        <item>今儿</item>
+    </string-array>
+    <string-array name="date_tomorrow">
+        <item>明天</item>
+        <item>明儿</item>
+    </string-array>
+    <string-array name="date_day_after_tomorrow">
+        <item>后天</item>
+    </string-array>
+    <string name="day_offset">大</string>
+
+
+
+
+
+
+    <string name="parse_result_op_failed_number_not_rec">抱歉，我未能识别出号码</string>
+    <string name="parse_result_op_failed_op_not_support">这个是我目前不支持的操作哟</string>
+    <string name="parse_result_op_ok_now">好的，正在处理</string>
+    <string name="parse_result_op_failed_op_failed">目前我不能这么做哟</string>
+    
+</resources>
