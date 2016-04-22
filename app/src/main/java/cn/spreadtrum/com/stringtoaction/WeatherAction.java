@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -43,6 +44,8 @@ import cn.spreadtrum.com.stringtoaction.util.GetYahooWeatherSaxTools;
  */
 public class WeatherAction extends BaseAction {
 
+
+    private static final long MAX_TIMEOUT = 10000;
     private HashMap<String, String> cityCodeHashMap;
     private ArrayList<HashMap<String,String>> weatherArrayList;
     private String CityCodeUrl = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.places%20where%20text%3D'"+ "上海" + "'&diagnostics=true";
@@ -59,6 +62,7 @@ public class WeatherAction extends BaseAction {
 
     String  updateLocation(){
         LocationManager lm = (LocationManager)mContext.getSystemService(Context.LOCATION_SERVICE);
+        
         LocationListener listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -82,6 +86,7 @@ public class WeatherAction extends BaseAction {
         };
         boolean wifienabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         boolean gpsenabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
         Location tempLocation = null;
         if(wifienabled || gpsenabled){
             Location lastLocation_wifi = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -101,7 +106,7 @@ public class WeatherAction extends BaseAction {
             Log.e("joe","current location...."+tempLocation.getLatitude()+":"+tempLocation.getLongitude());
             CodinateToCityAsync  ct = new CodinateToCityAsync();
             try {
-                city = ct.execute(tempLocation.getLatitude() + "," + tempLocation.getLongitude()).get(2000, TimeUnit.MILLISECONDS);
+                city = ct.execute(tempLocation.getLatitude() + "," + tempLocation.getLongitude()).get(MAX_TIMEOUT, TimeUnit.MILLISECONDS);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -121,11 +126,11 @@ public class WeatherAction extends BaseAction {
 
         //return super.runAction(src,key);
         Log.e("joe","weather--->"+src);
-        String resultString  = getCurrentWeatherReport();
+        String resultString  = parseWeatherRequest(src, key);
         if(resultString != null && !resultString.equals("")) {
             return new ParseResult(ParseResult.RES_OK, resultString);
         }
-        return new ParseResult(ParseResult.RES_OP_FAILED,mContext.getResources().getString(R.string.parse_result_op_failed_op_not_support));
+        return new ParseResult(ParseResult.RES_OP_FAILED,mContext.getResources().getString(R.string.parse_result_op_failed_op_failed));
     }
 
     @Override
@@ -137,24 +142,151 @@ public class WeatherAction extends BaseAction {
 
 
 
-    String getDateFromSrc(String src){
+    static final int DAY_TODAY = 0;
+    static final int DAY_TOMORROW = 1;
+    static final int DAY_AF_TOMORROW = 2;
+    static final int DAY_WEEK = 3;
 
+    private class WeatherElement{
+        int date;
+        String city;
 
-
-        return null;
+        public WeatherElement(int date, String city) {
+            this.date = date;
+            this.city = city;
+        }
     }
 
-    String handleWeatherResult(ArrayList<HashMap<String,String>> result,int offset){
-        HashMap<String,String> oneday = result.get(offset);
 
+    WeatherElement getDateFromSrc(String src){
+        int ret  = DAY_WEEK;
+        Log.e("joe","getDateFromSrc --->"+src);
+        String [] today = mContext.getResources().getStringArray(R.array.date_today);
+        String [] tomorrow = mContext.getResources().getStringArray(R.array.date_tomorrow);
+        String [] af_tomorrow = mContext.getResources().getStringArray(R.array.date_day_after_tomorrow);
+        String [] af_week = mContext.getResources().getStringArray(R.array.date_day_week);
+        if(src.contains("")){
+            ret = DAY_TODAY;
+        }
+        for(String tmp : today){
+            if(src.contains(tmp)){
+                src = src.replace(tmp,"");
+                ret = DAY_TODAY;
+            }
 
-        return "明天天气"+oneday.get("text")+",最高"+oneday.get("high")+"华式度"+"最低"+oneday.get("low")+"华式度";
+        }
+        for(String tmp : tomorrow){
+            if(src.contains(tmp)){
+                src = src.replace(tmp,"");
+                ret =  DAY_TOMORROW;
+            }
+        }
+        for (String tmp: af_tomorrow){
+            if(src.contains(tmp)){
+                ret =  DAY_AF_TOMORROW;
+                src = src.replace(tmp,"");
+            }
+        }
+        for (String tmp: af_week){
+            if(src.contains(tmp)){
+                ret =  DAY_WEEK;
+                src = src.replace(tmp,"");
+            }
+        }
+        Log.e("joe","getDateFromSrc --->"+src+"date --->"+ret);
+        return new WeatherElement(ret,src);
     }
 
-    String getWeatherReport(String city){
+    String getCityFromSrc(String src){
+        String city = "";
         try {
-            ArrayList<HashMap<String,String>> result = new SaxWeatherAsync().execute(city).get(3000,TimeUnit.MILLISECONDS);
-            return handleWeatherResult(result,1);
+            city = new SaxCityCodeAsync().execute(src).get(MAX_TIMEOUT,TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        return city;
+    }
+    String    parseWeatherRequest(String src,String key){
+        String [] preFixs = mContext.getResources().getStringArray(R.array.weather_prefix);
+        String tmp = src.intern();
+        String result = "";
+        int date = DAY_WEEK;
+        String city = "";
+        Log.e("joe","Weather---->"+tmp);
+        // delete weather
+        tmp = tmp.replace(key,"");
+        // delete how/what about/ show me
+        Log.e("joe","Weather non-key ---->"+tmp);
+        for(String prefix :preFixs){
+            tmp = tmp.replace(prefix,"");
+        }
+        Log.e("joe","Weather non-fix ---->"+tmp);
+        // usually we get the city and the date now :
+        WeatherElement element =  getDateFromSrc(tmp);
+        date = element.date;
+        tmp = element.city;
+        Log.e("joe","Weather non-date ---->"+tmp);
+        if(!tmp.equals("")){
+            city = getCityFromSrc(tmp);
+        }
+        if(city == null || city.equals("")){
+            city = updateLocation();
+        }
+        if(!city.equals("")){
+            element.city = city;
+            result = getWeatherReport(element);
+        }
+        return result;
+    }
+
+
+    float WToC(float W){
+        float base = ((W-32)/1.8f);
+        return  (float)(Math.round(base*10))/10;
+    }
+
+    String genWeatherResultSpecific(ArrayList<HashMap<String,String>> result,int offset, String city){
+        HashMap<String,String> oneday = result.get(offset);
+        String day = mContext.getResources().getStringArray(R.array.weather_answer_date)[offset];
+        String high = mContext.getResources().getString(R.string.weather_answer_temp_high);
+        String low = mContext.getResources().getString(R.string.weather_answer_temp_low);
+        String unit = mContext.getResources().getString(R.string.weather_answer_temp_unit_w);
+        String weather = oneday.get("text");
+        float degree_high = Float.valueOf(oneday.get("high"));
+        float degree_low = Float.valueOf(oneday.get("low"));
+        if(mContext.getResources().getConfiguration().locale.getCountry().equals(Locale.CHINA.getCountry())){
+            unit = mContext.getResources().getString(R.string.weather_answer_temp_unit_c);
+            degree_high = WToC(degree_high);
+            degree_low = WToC(degree_low);
+            int code = Integer.valueOf(oneday.get("code"));
+            int len = mContext.getResources().getStringArray(R.array.weather_results_yahoo).length -1;
+            if(code >len ){
+                code = len;
+            }
+            weather = mContext.getResources().getStringArray(R.array.weather_results_yahoo)[code];
+
+        }
+        return day+city+weather+high+degree_high+unit+low+degree_low+unit;
+    }
+
+    String handleWeatherResult(ArrayList<HashMap<String,String>> result,WeatherElement element){
+        String ret = "";
+        if(element.date < DAY_WEEK){
+            ret =  genWeatherResultSpecific(result,element.date,element.city);
+        }else {
+            ret = genWeatherResultSpecific(result,DAY_TODAY,element.city)+genWeatherResultSpecific(result,DAY_TOMORROW,element.city);
+        }
+        return ret;
+    }
+
+    String getWeatherReport(WeatherElement element){
+        try {
+            ArrayList<HashMap<String,String>> result = new SaxWeatherAsync().execute(element.city).get(MAX_TIMEOUT,TimeUnit.MILLISECONDS);
+            return handleWeatherResult(result,element);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -167,13 +299,6 @@ public class WeatherAction extends BaseAction {
         return null;
     }
 
-    String getCurrentWeatherReport(){
-        String city = updateLocation();
-        Log.e("joe","current city -->"+city);
-        String report = getWeatherReport(city);
-
-        return report;
-    }
 
 
 
@@ -222,8 +347,9 @@ public class WeatherAction extends BaseAction {
             if(params != null){
                 data = (String)params[0];
             }
+            String tag = mContext.getResources().getConfiguration().locale.toLanguageTag();
             HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet("http://maps.google.com/maps/api/geocode/json?latlng=%20"+data+"%20&language=zh-CN&sensor=true");
+            HttpGet httpGet = new HttpGet("http://maps.google.com/maps/api/geocode/json?latlng=%20"+data+"%20&language="+tag+"&sensor=true");
             HttpResponse response = null;
             String result = null;
             try {
@@ -272,6 +398,7 @@ public class WeatherAction extends BaseAction {
 
         @Override
         protected String doInBackground(String... params) {
+            String ret = "";
             String city = "";
             if(params != null){
                 city = params[0];
@@ -282,27 +409,27 @@ public class WeatherAction extends BaseAction {
                 HttpResponse response = httpClient.execute(httpGet);
                 StatusLine statusLine = response.getStatusLine();
                 int statusCode = statusLine.getStatusCode();
-                Log.e("joe", "doInBackground statusCode --->"+statusCode);
                 if (statusCode == 200) {
                     HttpEntity entity = response.getEntity();
                     InputStream content = entity.getContent();
 
                     xmlReader.setContentHandler(tools);
                     xmlReader.parse(new InputSource(new InputStreamReader(content)));
-
+                    ret = cityCodeHashMap.get("name");
                 } else {
                     Log.e("joe", "Failed to download file");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return cityCodeHashMap.get("woeid");
+
+            return ret;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.e("woeid", ""+result);
-            new SaxWeatherAsync().execute(result);
+            Log.e("joe", ""+result);
+           // new SaxWeatherAsync().execute(result);
         }
 
     }

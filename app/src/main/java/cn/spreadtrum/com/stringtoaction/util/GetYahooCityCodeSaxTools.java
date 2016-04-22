@@ -24,7 +24,7 @@ public class GetYahooCityCodeSaxTools extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName,
                              Attributes attributes) throws SAXException {
-        if(localName=="woeid"){
+        if(localName=="name"){
             isAdd=true;
         }
     }
@@ -34,7 +34,7 @@ public class GetYahooCityCodeSaxTools extends DefaultHandler {
             throws SAXException {
         if(isAdd){
             String str=new String(ch, start, length);
-            hashMap.put("woeid",str);
+            hashMap.put("name",str);
         }
 
     }
@@ -43,7 +43,7 @@ public class GetYahooCityCodeSaxTools extends DefaultHandler {
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
 
-        if(localName=="woeid"){
+        if(localName=="name"){
             isAdd=false;
         }
     }

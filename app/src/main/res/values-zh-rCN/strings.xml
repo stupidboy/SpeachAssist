@@ -46,8 +46,9 @@
     </string-array>
 
     <string-array name="weather_actions">
-        <item>天气</item>
         <item>天气预报</item>
+        <item>天气情况</item>
+        <item>天气</item>
     </string-array>
 
     <string-array name="date_today">
@@ -62,9 +63,30 @@
     <string-array name="date_day_after_tomorrow">
         <item>后天</item>
     </string-array>
+<string-array name="date_day_week">
+    <item>最近</item>
+    <item>近期</item>
+</string-array>
+
+
+    
     <string name="day_offset">大</string>
+    <string-array name="weather_prefix">
+        <item>如何</item>
+        <item>怎么样</item>
+        <item>咋样</item>
+    </string-array>
 
-
+    <string-array name="weather_answer_date">
+        <item>今天</item>
+        <item>明天</item>
+        <item>后天</item>
+        <item>近期</item>
+    </string-array>
+    <string name="weather_answer_temp_high">最高气温</string>
+    <string name="weather_answer_temp_low">最低气温</string>
+    <string name="weather_answer_temp_unit_w">华式度</string>
+    <string name="weather_answer_temp_unit_c">摄氏度</string>
 
 
 
