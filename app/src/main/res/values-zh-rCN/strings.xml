@@ -95,5 +95,82 @@
     <string name="parse_result_op_failed_op_not_support">这个是我目前不支持的操作哟</string>
     <string name="parse_result_op_ok_now">好的，正在处理</string>
     <string name="parse_result_op_failed_op_failed">目前我不能这么做哟</string>
-    
+    <string-array name="weather_results_yahoo">
+        <item>龙卷风</item>
+        <item>热带风暴</item>
+        <item>飓风</item>
+        <item>强雷暴天气</item>
+        <item>雷暴</item>
+        <item>雨夹雪</item>
+        <item>冻雨</item>
+        <item>雨夹雪</item>
+        <item>冻毛毛雨</item>
+        <item>毛毛雨</item>
+        <item>冻雨</item>
+        <item>阵雨</item>
+        <item>阵雨</item>
+        <item>飘雪</item>
+        <item>阵雪</item>
+        <item>中雪</item>
+        <item>雪</item>
+        <item>冰雹</item>
+        <item>雨雪</item>
+        <item>尘</item>
+        <item>雾</item>
+        <item>霾</item>
+        <item>烟雾</item>
+        <item>大风</item>
+        <item>有风</item>
+        <item>寒</item>
+        <item>多云</item>
+        <item>大部多云</item>
+        <item>大部多云</item>
+        <item>大部多云</item>
+        <item>大部多云</item>
+        <item>晴</item>
+        <item>晴</item>
+        <item>晴</item>
+        <item>晴</item>
+        <item>小雨</item>
+        <item>热</item>
+        <item>局部雷暴</item>
+        <item>雷阵雨</item>
+        <item>雷阵雨</item>
+        <item>零星阵雨</item>
+        <item>大雪</item>
+        <item>阵雪</item>
+        <item>大雪</item>
+        <item>部分多云</item>
+        <item>雷阵雨</item>
+        <item>雪</item>
+        <item>局部雷阵雨</item>
+        <item>未知</item>
+    </string-array>
+    <string-array name="search_actions">
+        <item>怎么走</item>
+        <item>怎么去</item>
+        <item>路线</item>
+        <item>导航</item>
+        <item>最近的</item>
+        <item>到</item>
+        <item>附近的</item>
+    </string-array>
+
+    <string-array name="search_prefixs_from">
+        <item>从</item>
+    </string-array>
+    <string-array name="search_prefixs_to">
+        <item>到</item>
+        <item>往</item>
+        <item>去</item>
+        <item>至</item>
+    </string-array>
+    <string-array name="search_prefixs_how">
+        <item>怎么走</item>
+        <item>在哪</item>
+        <item>的路线</item>
+        <item>怎么去</item>
+    </string-array>
+
+
 </resources>

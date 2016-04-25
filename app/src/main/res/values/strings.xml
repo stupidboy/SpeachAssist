@@ -83,55 +83,24 @@
 
 
 
-    <string-array name="weather_results_yahoo">
-        <item>龙卷风</item>
-        <item>热带风暴</item>
-        <item>飓风</item>
-        <item>强雷暴天气</item>
-        <item>雷暴</item>
-        <item>雨夹雪</item>
-        <item>冻雨</item>
-        <item>雨夹雪</item>
-        <item>冻毛毛雨</item>
-        <item>毛毛雨</item>
-        <item>冻雨</item>
-        <item>阵雨</item>
-        <item>阵雨</item>
-        <item>飘雪</item>
-        <item>阵雪</item>
-        <item>中雪</item>
-        <item>雪</item>
-        <item>冰雹</item>
-        <item>雨雪</item>
-        <item>尘</item>
-        <item>雾</item>
-        <item>霾</item>
-        <item>烟雾</item>
-        <item>大风</item>
-        <item>有风</item>
-        <item>寒</item>
-        <item>多云</item>
-        <item>大部多云</item>
-        <item>大部多云</item>
-        <item>大部多云</item>
-        <item>大部多云</item>
-        <item>晴</item>
-        <item>晴</item>
-        <item>晴</item>
-        <item>晴</item>
-        <item>小雨</item>
-        <item>热</item>
-        <item>局部雷暴</item>
-        <item>雷阵雨</item>
-        <item>雷阵雨</item>
-        <item>零星阵雨</item>
-        <item>大雪</item>
-        <item>阵雪</item>
-        <item>大雪</item>
-        <item>部分多云</item>
-        <item>雷阵雨</item>
-        <item>雪</item>
-        <item>局部雷阵雨</item>
-        <item>未知</item>
+
+
+    <string-array name="search_actions">
+        <item>search</item>
     </string-array>
+
+
+    <string-array name="search_prefixs_from">
+        <item>from</item>
+    </string-array>
+    <string-array name="search_prefixs_to">
+    <item>to</item>
+    </string-array>
+
+    <string-array name="search_prefixs_how">
+        <item>where is</item>
+        <item>where to go</item>
+    </string-array>
+
+
 </resources>
