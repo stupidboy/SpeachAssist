@@ -24,11 +24,11 @@ protected  ParseResult runAction(String src, String key) {
     }
 
     protected  String getName(){
-        return "base";
+        return this.getClass().getName();
     }
     protected String adapt(String action){
         action = action.toLowerCase();
-        Log.e("joe","action--->"+action);
+        Log.e("joe",getName()+"action--->"+action);
         if(mPossStrings != null){
             for(String string : mPossStrings){
                 if(action.contains(string)){

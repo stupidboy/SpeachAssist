@@ -21,10 +21,11 @@ public class ActionParser {
         SettingAction mSettingsAction = new SettingAction(mContext);
         WeatherAction weatherAction =  new WeatherAction(mContext);
         SearchAction  searchAction = new SearchAction(mContext);
+        map.add(weatherAction);
         map.add(searchAction);
         map.add(mCallAction);
         map.add(mSettingsAction);
-        map.add(weatherAction);
+
 
     }
 

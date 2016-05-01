@@ -20,17 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cn.spreadtrum.com.stringtoaction.view.FloatView;
+import cn.spreadtrum.com.stringtoaction.view.FloatViewManager;
+
 
 public class MainActivity extends Activity {
     private ListView mList;
     private Button mButton;
     private TextToSpeech tts ;
     private ActionParser mParser ;
+    private FloatViewManager mViewManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mButton = (Button)this.findViewById(R.id.button);
+        mViewManager = new FloatViewManager(this);
         PackageManager pm = this.getPackageManager();
         List<ResolveInfo> infos = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH),0);
         mParser = new ActionParser(this.getApplicationContext());
@@ -92,10 +97,11 @@ public class MainActivity extends Activity {
             //mList.setAdapter(new ArrayAdapter<String>(this,
             //        android.R.layout.simple_list_item_1, matches));
             //Toast.makeText(this,matches.get(0),Toast.LENGTH_SHORT).show();
-
+            //mViewManager.showText(matches.get(0));
             ParseResult ret = mParser.Parse(matches.get(0));
             if(ret.getReturnString() != null){
                 tts.speak(ret.getReturnString(), TextToSpeech.QUEUE_FLUSH, null);
+                //mViewManager.showText(ret.getReturnString());
             }
 
         }

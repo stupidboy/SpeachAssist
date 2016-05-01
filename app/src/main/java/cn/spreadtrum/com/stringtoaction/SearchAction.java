@@ -72,12 +72,13 @@ public class SearchAction extends BaseAction {
                     String subString = src.substring(index_to+tmp.length());
                     for(String tmp1 :how_fix){
                         if(subString.contains(tmp1)) {
-                            subString = subString.substring(0, subString.indexOf(tmp1));
+                            //subString = subString.substring(0, subString.indexOf(tmp1));
+                            subString = subString.replace(tmp1,"");
                         }
                     }
                     // normally the target:
                     target = subString;
-                    Log.e("joe","target:"+target);
+                    Log.e("joe","target2:"+target);
                     if(index_to != 0){
                     int start_index = 0;
                     String subStringFrom = src;

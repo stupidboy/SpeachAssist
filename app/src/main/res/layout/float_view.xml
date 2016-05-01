@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.spreadtrum.com.stringtoaction.view.FloatView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/float_view"
+    android:layout_width="300dp" android:layout_height="400dp"
+    android:background="@android:color/holo_blue_light"
+    android:gravity="left"
+    android:orientation="vertical">
+
+</cn.spreadtrum.com.stringtoaction.view.FloatView>

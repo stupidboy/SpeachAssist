@@ -152,6 +152,7 @@
         <item>路线</item>
         <item>导航</item>
         <item>最近的</item>
+        <item>在哪</item>
         <item>到</item>
         <item>附近的</item>
     </string-array>
@@ -168,8 +169,16 @@
     <string-array name="search_prefixs_how">
         <item>怎么走</item>
         <item>在哪</item>
+        <item>在哪儿</item>
         <item>的路线</item>
         <item>怎么去</item>
+    </string-array>
+    <string-array name="web_action">
+        <item>搜索</item>
+        <item>查找</item>
+        <item>百度</item>
+        <item>是什么</item>
+        <item>怎么样</item>
     </string-array>
 
 
